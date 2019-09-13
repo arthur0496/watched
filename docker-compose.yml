@@ -1,0 +1,22 @@
+version: '3'
+services:
+  watched-api-db:
+    container_name: watched-api-db
+    image: postgres:9.6
+    volumes:
+      - watched-pg-data:/var/lib/postgresql/data
+  watched-api:
+    container_name: watched-api
+    build : .
+    env_file : dev-env
+    command: ["sh", "start.sh"]
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/watched
+      - watched-bundle:/usr/local/bundle
+
+volumes:
+  watched-pg-data:
+  watched-bundle:
+
